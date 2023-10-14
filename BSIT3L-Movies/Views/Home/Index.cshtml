@@ -2,66 +2,30 @@
 <html>
 <head>
     <title>Movie Table</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        table, th, td {
-            border: 1px solid #ccc;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        tr:nth-child(odd) {
-            background-color: #fff;
-        }
-
-        .custom-image {
-            max-width: 100px;
-            max-height: 100px;
-        }
-    </style>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Rating</th>
-                <th>Release Year</th>
-                <th>Genre</th>
-                <th>Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var movie in Model)
-            {
-                <tr>
-                    <td>@movie.Id</td>
-                    <td><a href="/movies/getmovie/@movie.Id">@movie.Name</a></td>
-                    <td>@movie.Rating</td>
-                    <td>@movie.ReleaseYear</td>
-                    <td>@movie.Genre</td>
-                    <td>
-                        <img src="@movie.ImageUrl" alt="@movie.Name" class="custom-image" />
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="container">
+        @for (var i = 0; i < Model.Count; i += 5)
+        {
+            <div class="row">
+                @for (var j = i; j < Math.Min(i + 5, Model.Count); j++)
+                {
+                    <div class="col-md-2 mb-4">
+                        <div class="card">
+                            <img src="@Model[j].ImageUrl" alt="@Model[j].Name" class="card-img-top custom-image">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="/movies/getmovie/@Model[j].Id">@Model[j].Name</a>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
